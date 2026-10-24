@@ -206,6 +206,18 @@ export function buildArchitectureModel(
     }
   }
 
+  // Calculate degrees and populate symbols
+  for (const node of nodes) {
+    if (node.file) {
+      const inCount = depGraph.importedBy.get(node.file)?.size || 0;
+      const outCount = depGraph.imports.get(node.file)?.size || 0;
+      const syms = depGraph.fileSymbols.get(node.file) || [];
+      node.inDegree = inCount;
+      node.outDegree = outCount;
+      node.symbols = syms.map(s => s.name).slice(0, 6);
+    }
+  }
+
   // If few direct node imports, link subsystem nodes logically
   if (edges.length === 0 && nodes.length > 1) {
     for (let i = 0; i < nodes.length - 1; i++) {

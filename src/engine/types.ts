@@ -32,6 +32,9 @@ export interface ArchitectureNode {
   description: string;
   x?: number;
   y?: number;
+  inDegree?: number;
+  outDegree?: number;
+  symbols?: string[];
 }
 
 export interface ArchitectureEdge {

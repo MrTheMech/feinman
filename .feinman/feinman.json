@@ -3,10 +3,10 @@
   "name": "feinman",
   "rootPath": "C:\\feinman",
   "isSample": false,
-  "analyzedAt": "2026-10-24T10:22:55.167Z",
-  "fileCount": 43,
-  "totalLines": 7502,
-  "primaryLanguage": "TypeScript",
+  "analyzedAt": "2026-10-24T11:05:21.708Z",
+  "fileCount": 48,
+  "totalLines": 9528,
+  "primaryLanguage": "TypeScript (React)",
   "whatIsThis": {
     "summary": "AI-powered tool and MCP server that makes unfamiliar codebases understandable to humans. Built on foundational ideas and schemas from Understand-Anything (Egonex-AI) and Repomix.",
     "problemSolved": "Helps users build and run feinman with verified tooling and clear modular structure.",
@@ -138,7 +138,10 @@
           "Validates request payloads and query parameters",
           "Routes requests to corresponding business services"
         ],
-        "dependencies": []
+        "dependencies": [
+          "core",
+          "mcp-skills"
+        ]
       },
       {
         "id": "core",
@@ -171,6 +174,8 @@
         "files": [
           "src/web/App.tsx",
           "src/web/components/FeynmanExplainModal.tsx",
+          "src/web/components/graph/ArchitectureGraphCanvas.tsx",
+          "src/web/components/graph/CustomFlowNode.tsx",
           "src/web/components/HowItWorks.tsx",
           "src/web/components/HowToMaintain.tsx",
           "src/web/components/McpConfigModal.tsx",
@@ -189,7 +194,9 @@
           "Captures user interactions, form inputs, and clicks",
           "Communicates with backend APIs and visualizes state"
         ],
-        "dependencies": []
+        "dependencies": [
+          "core"
+        ]
       },
       {
         "id": "mcp-skills",
@@ -209,7 +216,9 @@
           "Generates self-describing skill packs for AI agents",
           "Bridges external AI workflows with the repository engine"
         ],
-        "dependencies": []
+        "dependencies": [
+          "core"
+        ]
       },
       {
         "id": "utils",
@@ -219,9 +228,12 @@
         "files": [
           ".feinman/feinman.json",
           ".feinman/SKILL.md",
+          ".gitignore",
           "index.html",
+          "LICENSE",
           "package.json",
           "postcss.config.js",
+          "README.md",
           "tailwind.config.js",
           "tsconfig.json",
           "vite.config.ts"
@@ -241,7 +253,10 @@
         "type": "entry",
         "subsystem": "CLI & Entrypoints",
         "file": "bin/feynstart.js",
-        "description": "CLI & Entrypoints: bin/feynstart.js"
+        "description": "CLI & Entrypoints: bin/feynstart.js",
+        "inDegree": 0,
+        "outDegree": 0,
+        "symbols": []
       },
       {
         "id": "src/mcp/server.ts",
@@ -249,7 +264,14 @@
         "type": "service",
         "subsystem": "API & Routing Layer",
         "file": "src/mcp/server.ts",
-        "description": "API & Routing Layer: src/mcp/server.ts"
+        "description": "API & Routing Layer: src/mcp/server.ts",
+        "inDegree": 2,
+        "outDegree": 3,
+        "symbols": [
+          "MCPRequest",
+          "MCPResponse",
+          "FeinmanMCPServer"
+        ]
       },
       {
         "id": "src/server/api.ts",
@@ -257,7 +279,12 @@
         "type": "service",
         "subsystem": "API & Routing Layer",
         "file": "src/server/api.ts",
-        "description": "API & Routing Layer: src/server/api.ts"
+        "description": "API & Routing Layer: src/server/api.ts",
+        "inDegree": 1,
+        "outDegree": 6,
+        "symbols": [
+          "createApiRouter"
+        ]
       },
       {
         "id": "src/server/index.ts",
@@ -265,7 +292,13 @@
         "type": "service",
         "subsystem": "API & Routing Layer",
         "file": "src/server/index.ts",
-        "description": "API & Routing Layer: src/server/index.ts"
+        "description": "API & Routing Layer: src/server/index.ts",
+        "inDegree": 0,
+        "outDegree": 4,
+        "symbols": [
+          "ServerOptions",
+          "startFeinmanServer"
+        ]
       },
       {
         "id": "src/engine/analyzer.ts",
@@ -273,7 +306,13 @@
         "type": "core",
         "subsystem": "Core Logic & Intelligence",
         "file": "src/engine/analyzer.ts",
-        "description": "Core Logic & Intelligence: src/engine/analyzer.ts"
+        "description": "Core Logic & Intelligence: src/engine/analyzer.ts",
+        "inDegree": 4,
+        "outDegree": 7,
+        "symbols": [
+          "AnalysisContext",
+          "analyzeProject"
+        ]
       },
       {
         "id": "src/engine/architecture.ts",
@@ -281,7 +320,12 @@
         "type": "core",
         "subsystem": "Core Logic & Intelligence",
         "file": "src/engine/architecture.ts",
-        "description": "Core Logic & Intelligence: src/engine/architecture.ts"
+        "description": "Core Logic & Intelligence: src/engine/architecture.ts",
+        "inDegree": 1,
+        "outDegree": 3,
+        "symbols": [
+          "buildArchitectureModel"
+        ]
       },
       {
         "id": "src/engine/astParser.ts",
@@ -289,7 +333,14 @@
         "type": "core",
         "subsystem": "Core Logic & Intelligence",
         "file": "src/engine/astParser.ts",
-        "description": "Core Logic & Intelligence: src/engine/astParser.ts"
+        "description": "Core Logic & Intelligence: src/engine/astParser.ts",
+        "inDegree": 5,
+        "outDegree": 1,
+        "symbols": [
+          "ExtractedSymbol",
+          "DependencyGraph",
+          "buildDependencyGraph"
+        ]
       },
       {
         "id": "src/web/App.tsx",
@@ -297,7 +348,12 @@
         "type": "ui",
         "subsystem": "UI & User Experience",
         "file": "src/web/App.tsx",
-        "description": "UI & User Experience: src/web/App.tsx"
+        "description": "UI & User Experience: src/web/App.tsx",
+        "inDegree": 1,
+        "outDegree": 12,
+        "symbols": [
+          "App"
+        ]
       },
       {
         "id": "src/web/components/FeynmanExplainModal.tsx",
@@ -305,15 +361,25 @@
         "type": "ui",
         "subsystem": "UI & User Experience",
         "file": "src/web/components/FeynmanExplainModal.tsx",
-        "description": "UI & User Experience: src/web/components/FeynmanExplainModal.tsx"
+        "description": "UI & User Experience: src/web/components/FeynmanExplainModal.tsx",
+        "inDegree": 1,
+        "outDegree": 0,
+        "symbols": [
+          "FeynmanExplainModal"
+        ]
       },
       {
-        "id": "src/web/components/HowItWorks.tsx",
-        "label": "HowItWorks.tsx",
+        "id": "src/web/components/graph/ArchitectureGraphCanvas.tsx",
+        "label": "ArchitectureGraphCanvas.tsx",
         "type": "ui",
         "subsystem": "UI & User Experience",
-        "file": "src/web/components/HowItWorks.tsx",
-        "description": "UI & User Experience: src/web/components/HowItWorks.tsx"
+        "file": "src/web/components/graph/ArchitectureGraphCanvas.tsx",
+        "description": "UI & User Experience: src/web/components/graph/ArchitectureGraphCanvas.tsx",
+        "inDegree": 2,
+        "outDegree": 2,
+        "symbols": [
+          "ArchitectureGraphCanvas"
+        ]
       },
       {
         "id": ".agents/skills/feinman/SKILL.md",
@@ -321,7 +387,10 @@
         "type": "core",
         "subsystem": "MCP & Agent Skills",
         "file": ".agents/skills/feinman/SKILL.md",
-        "description": "MCP & Agent Skills: .agents/skills/feinman/SKILL.md"
+        "description": "MCP & Agent Skills: .agents/skills/feinman/SKILL.md",
+        "inDegree": 0,
+        "outDegree": 0,
+        "symbols": []
       },
       {
         "id": ".feinman/mcp-config.json",
@@ -329,7 +398,10 @@
         "type": "core",
         "subsystem": "MCP & Agent Skills",
         "file": ".feinman/mcp-config.json",
-        "description": "MCP & Agent Skills: .feinman/mcp-config.json"
+        "description": "MCP & Agent Skills: .feinman/mcp-config.json",
+        "inDegree": 0,
+        "outDegree": 0,
+        "symbols": []
       },
       {
         "id": "scratch/test-mcp-call.js",
@@ -337,7 +409,10 @@
         "type": "core",
         "subsystem": "MCP & Agent Skills",
         "file": "scratch/test-mcp-call.js",
-        "description": "MCP & Agent Skills: scratch/test-mcp-call.js"
+        "description": "MCP & Agent Skills: scratch/test-mcp-call.js",
+        "inDegree": 0,
+        "outDegree": 0,
+        "symbols": []
       },
       {
         "id": ".feinman/feinman.json",
@@ -345,7 +420,10 @@
         "type": "util",
         "subsystem": "Utilities & Configuration",
         "file": ".feinman/feinman.json",
-        "description": "Utilities & Configuration: .feinman/feinman.json"
+        "description": "Utilities & Configuration: .feinman/feinman.json",
+        "inDegree": 0,
+        "outDegree": 0,
+        "symbols": []
       },
       {
         "id": ".feinman/SKILL.md",
@@ -353,42 +431,73 @@
         "type": "util",
         "subsystem": "Utilities & Configuration",
         "file": ".feinman/SKILL.md",
-        "description": "Utilities & Configuration: .feinman/SKILL.md"
+        "description": "Utilities & Configuration: .feinman/SKILL.md",
+        "inDegree": 0,
+        "outDegree": 0,
+        "symbols": []
       },
       {
-        "id": "index.html",
-        "label": "index.html",
+        "id": ".gitignore",
+        "label": ".gitignore",
         "type": "util",
         "subsystem": "Utilities & Configuration",
-        "file": "index.html",
-        "description": "Utilities & Configuration: index.html"
+        "file": ".gitignore",
+        "description": "Utilities & Configuration: .gitignore",
+        "inDegree": 0,
+        "outDegree": 0,
+        "symbols": []
       }
     ],
     "edges": [
       {
-        "from": "bin/feynstart.js",
+        "from": "src/mcp/server.ts",
+        "to": "src/engine/analyzer.ts",
+        "label": "imports"
+      },
+      {
+        "from": "src/server/api.ts",
+        "to": "src/engine/analyzer.ts",
+        "label": "imports"
+      },
+      {
+        "from": "src/server/api.ts",
         "to": "src/mcp/server.ts",
-        "label": "connects to"
+        "label": "imports"
       },
       {
         "from": "src/server/index.ts",
         "to": "src/engine/analyzer.ts",
-        "label": "connects to"
+        "label": "imports"
       },
       {
-        "from": "src/engine/astParser.ts",
-        "to": "src/web/App.tsx",
-        "label": "connects to"
+        "from": "src/server/index.ts",
+        "to": "src/mcp/server.ts",
+        "label": "imports"
       },
       {
-        "from": "src/web/components/HowItWorks.tsx",
-        "to": ".agents/skills/feinman/SKILL.md",
-        "label": "connects to"
+        "from": "src/server/index.ts",
+        "to": "src/server/api.ts",
+        "label": "imports"
       },
       {
-        "from": "scratch/test-mcp-call.js",
-        "to": ".feinman/feinman.json",
-        "label": "connects to"
+        "from": "src/engine/analyzer.ts",
+        "to": "src/engine/astParser.ts",
+        "label": "imports"
+      },
+      {
+        "from": "src/engine/analyzer.ts",
+        "to": "src/engine/architecture.ts",
+        "label": "imports"
+      },
+      {
+        "from": "src/engine/architecture.ts",
+        "to": "src/engine/astParser.ts",
+        "label": "imports"
+      },
+      {
+        "from": "src/web/App.tsx",
+        "to": "src/web/components/FeynmanExplainModal.tsx",
+        "label": "imports"
       }
     ],
     "dataFlows": [
@@ -430,7 +539,7 @@
       {
         "title": "Add an API route or endpoint",
         "query": "Add an API route or endpoint",
-        "summary": "To implement \"Add an API route or endpoint\", start in **src/server/api.ts** where the primary logic resides. Impact is localized.",
+        "summary": "To implement \"Add an API route or endpoint\", start in **src/server/api.ts** where the primary logic resides. Be aware of 3 downstream components that may need adjustments.",
         "targetFiles": [
           {
             "file": "src/server/api.ts",
@@ -454,18 +563,34 @@
             "confidence": 0.75
           }
         ],
-        "blastRadius": [],
+        "blastRadius": [
+          {
+            "file": "src/server/index.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/server/api.ts"
+          },
+          {
+            "file": "src/engine/analyzer.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/architecture.ts"
+          },
+          {
+            "file": "src/mcp/server.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/changePlanner.ts"
+          }
+        ],
         "checklist": [
           "1. Inspect **src/server/api.ts** to understand current signatures and behavior.",
           "2. Update supporting logic across **.feinman/feinman.json, src/engine/architecture.ts, src/engine/changePlanner.ts** to ensure parameter and type consistency.",
-          "3. Check downstream dependents: verify that files importing this module (call sites) receive expected return types.",
+          "3. Check downstream dependents: verify that files importing this module (src/server/index.ts, src/engine/analyzer.ts) receive expected return types.",
           "4. Run the project tests to verify no regressions were introduced."
         ]
       },
       {
         "title": "Add a new configuration or environment variable",
         "query": "Add a new configuration or environment variable",
-        "summary": "To implement \"Add a new configuration or environment variable\", start in **.feinman/feinman.json** where the primary logic resides. Impact is localized.",
+        "summary": "To implement \"Add a new configuration or environment variable\", start in **.feinman/feinman.json** where the primary logic resides. Be aware of 3 downstream components that may need adjustments.",
         "targetFiles": [
           {
             "file": ".feinman/feinman.json",
@@ -478,28 +603,44 @@
             "confidence": 0.95
           },
           {
-            "file": "src/engine/architecture.ts",
+            "file": "README.md",
             "reason": "Relevant module in the target feature area",
             "confidence": 0.95
           },
           {
-            "file": "src/engine/detector.ts",
+            "file": "src/engine/architecture.ts",
             "reason": "Relevant module in the target feature area",
             "confidence": 0.95
           }
         ],
-        "blastRadius": [],
+        "blastRadius": [
+          {
+            "file": "src/engine/analyzer.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/changePlanner.ts"
+          },
+          {
+            "file": "src/mcp/server.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/changePlanner.ts"
+          },
+          {
+            "file": "src/server/api.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/changePlanner.ts"
+          }
+        ],
         "checklist": [
           "1. Inspect **.feinman/feinman.json** to understand current signatures and behavior.",
-          "2. Update supporting logic across **src/engine/changePlanner.ts, src/engine/architecture.ts, src/engine/detector.ts** to ensure parameter and type consistency.",
-          "3. Check downstream dependents: verify that files importing this module (call sites) receive expected return types.",
+          "2. Update supporting logic across **src/engine/changePlanner.ts, README.md, src/engine/architecture.ts** to ensure parameter and type consistency.",
+          "3. Check downstream dependents: verify that files importing this module (src/engine/analyzer.ts, src/mcp/server.ts) receive expected return types.",
           "4. Run the project tests to verify no regressions were introduced."
         ]
       },
       {
         "title": "Update database model or schema",
         "query": "Update database model or schema",
-        "summary": "To implement \"Update database model or schema\", start in **src/engine/llm.ts** where the primary logic resides. Impact is localized.",
+        "summary": "To implement \"Update database model or schema\", start in **src/engine/llm.ts** where the primary logic resides. Be aware of 3 downstream components that may need adjustments.",
         "targetFiles": [
           {
             "file": "src/engine/llm.ts",
@@ -524,21 +665,42 @@
             "confidence": 0.75
           }
         ],
-        "blastRadius": [],
+        "blastRadius": [
+          {
+            "file": "src/mcp/server.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/llm.ts"
+          },
+          {
+            "file": "src/server/api.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/llm.ts"
+          },
+          {
+            "file": "src/engine/analyzer.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/architecture.ts"
+          }
+        ],
         "checklist": [
           "1. Inspect **src/engine/llm.ts** to understand current signatures and behavior.",
           "2. Update supporting logic across **src/engine/architecture.ts, .feinman/feinman.json, src/engine/changePlanner.ts** to ensure parameter and type consistency.",
-          "3. Check downstream dependents: verify that files importing this module (call sites) receive expected return types.",
+          "3. Check downstream dependents: verify that files importing this module (src/mcp/server.ts, src/server/api.ts) receive expected return types.",
           "4. Run the project tests to verify no regressions were introduced."
         ]
       },
       {
         "title": "Modify UI component styling or layout",
         "query": "Modify UI component styling or layout",
-        "summary": "To implement \"Modify UI component styling or layout\", start in **src/web/components/HowItWorks.tsx** where the primary logic resides. Impact is localized.",
+        "summary": "To implement \"Modify UI component styling or layout\", start in **src/web/components/HowItWorks.tsx** where the primary logic resides. Be aware of 4 downstream components that may need adjustments.",
         "targetFiles": [
           {
             "file": "src/web/components/HowItWorks.tsx",
+            "reason": "Directory path matches \"component\"",
+            "confidence": 0.95
+          },
+          {
+            "file": "src/web/components/WalkthroughTour.tsx",
             "reason": "Directory path matches \"component\"",
             "confidence": 0.95
           },
@@ -551,25 +713,41 @@
             "file": "src/engine/changePlanner.ts",
             "reason": "Relevant module in the target feature area",
             "confidence": 0.95
-          },
-          {
-            "file": "src/web/components/FeynmanExplainModal.tsx",
-            "reason": "Directory path matches \"component\"",
-            "confidence": 0.95
           }
         ],
-        "blastRadius": [],
+        "blastRadius": [
+          {
+            "file": "src/web/App.tsx",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/web/components/HowItWorks.tsx"
+          },
+          {
+            "file": "src/engine/analyzer.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/changePlanner.ts"
+          },
+          {
+            "file": "src/mcp/server.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/changePlanner.ts"
+          },
+          {
+            "file": "src/server/api.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/changePlanner.ts"
+          }
+        ],
         "checklist": [
           "1. Inspect **src/web/components/HowItWorks.tsx** to understand current signatures and behavior.",
-          "2. Update supporting logic across **.feinman/feinman.json, src/engine/changePlanner.ts, src/web/components/FeynmanExplainModal.tsx** to ensure parameter and type consistency.",
-          "3. Check downstream dependents: verify that files importing this module (call sites) receive expected return types.",
+          "2. Update supporting logic across **src/web/components/WalkthroughTour.tsx, .feinman/feinman.json, src/engine/changePlanner.ts** to ensure parameter and type consistency.",
+          "3. Check downstream dependents: verify that files importing this module (src/web/App.tsx, src/engine/analyzer.ts) receive expected return types.",
           "4. Run the project tests to verify no regressions were introduced."
         ]
       },
       {
         "title": "Write a new unit test",
         "query": "Write a new unit test",
-        "summary": "To implement \"Write a new unit test\", start in **.feinman/feinman.json** where the primary logic resides. Impact is localized.",
+        "summary": "To implement \"Write a new unit test\", start in **.feinman/feinman.json** where the primary logic resides. Be aware of 3 downstream components that may need adjustments.",
         "targetFiles": [
           {
             "file": ".feinman/feinman.json",
@@ -592,11 +770,27 @@
             "confidence": 0.95
           }
         ],
-        "blastRadius": [],
+        "blastRadius": [
+          {
+            "file": "src/engine/analyzer.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/changePlanner.ts"
+          },
+          {
+            "file": "src/mcp/server.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/changePlanner.ts"
+          },
+          {
+            "file": "src/server/api.ts",
+            "impact": "Direct Downstream Importer",
+            "explanation": "Directly imports and relies on exported symbols from src/engine/changePlanner.ts"
+          }
+        ],
         "checklist": [
           "1. Inspect **.feinman/feinman.json** to understand current signatures and behavior.",
           "2. Update supporting logic across **src/engine/changePlanner.ts, src/server/samples.ts, scratch/test-mcp-call.js** to ensure parameter and type consistency.",
-          "3. Check downstream dependents: verify that files importing this module (call sites) receive expected return types.",
+          "3. Check downstream dependents: verify that files importing this module (src/engine/analyzer.ts, src/mcp/server.ts) receive expected return types.",
           "4. Run the project tests to verify no regressions were introduced."
         ]
       }
@@ -711,7 +905,7 @@
                   "path": ".agents/skills/feinman/SKILL.md",
                   "name": "SKILL.md",
                   "isDirectory": false,
-                  "size": 5245,
+                  "size": 5263,
                   "lineCount": 111,
                   "language": "Markdown"
                 }
@@ -730,8 +924,8 @@
           "path": ".feinman/feinman.json",
           "name": "feinman.json",
           "isDirectory": false,
-          "size": 39286,
-          "lineCount": 1131,
+          "size": 47321,
+          "lineCount": 1372,
           "language": "JSON"
         },
         {
@@ -746,7 +940,7 @@
           "path": ".feinman/SKILL.md",
           "name": "SKILL.md",
           "isDirectory": false,
-          "size": 5245,
+          "size": 5263,
           "lineCount": 111,
           "language": "Markdown"
         }
@@ -761,8 +955,8 @@
           "path": "bin/feynstart.js",
           "name": "feynstart.js",
           "isDirectory": false,
-          "size": 4406,
-          "lineCount": 116,
+          "size": 12434,
+          "lineCount": 287,
           "language": "JavaScript"
         }
       ]
@@ -820,16 +1014,16 @@
               "path": "src/engine/architecture.ts",
               "name": "architecture.ts",
               "isDirectory": false,
-              "size": 9110,
-              "lineCount": 279,
+              "size": 9534,
+              "lineCount": 291,
               "language": "TypeScript"
             },
             {
               "path": "src/engine/astParser.ts",
               "name": "astParser.ts",
               "isDirectory": false,
-              "size": 5981,
-              "lineCount": 192,
+              "size": 6108,
+              "lineCount": 201,
               "language": "TypeScript"
             },
             {
@@ -852,8 +1046,8 @@
               "path": "src/engine/llm.ts",
               "name": "llm.ts",
               "isDirectory": false,
-              "size": 5174,
-              "lineCount": 146,
+              "size": 8229,
+              "lineCount": 214,
               "language": "TypeScript"
             },
             {
@@ -868,8 +1062,8 @@
               "path": "src/engine/types.ts",
               "name": "types.ts",
               "isDirectory": false,
-              "size": 3748,
-              "lineCount": 189,
+              "size": 3813,
+              "lineCount": 192,
               "language": "TypeScript"
             },
             {
@@ -906,8 +1100,8 @@
               "path": "src/server/api.ts",
               "name": "api.ts",
               "isDirectory": false,
-              "size": 7013,
-              "lineCount": 238,
+              "size": 7823,
+              "lineCount": 264,
               "language": "TypeScript"
             },
             {
@@ -954,6 +1148,29 @@
               "isDirectory": true,
               "children": [
                 {
+                  "path": "src/web/components/graph",
+                  "name": "graph",
+                  "isDirectory": true,
+                  "children": [
+                    {
+                      "path": "src/web/components/graph/ArchitectureGraphCanvas.tsx",
+                      "name": "ArchitectureGraphCanvas.tsx",
+                      "isDirectory": false,
+                      "size": 15655,
+                      "lineCount": 445,
+                      "language": "TypeScript (React)"
+                    },
+                    {
+                      "path": "src/web/components/graph/CustomFlowNode.tsx",
+                      "name": "CustomFlowNode.tsx",
+                      "isDirectory": false,
+                      "size": 7874,
+                      "lineCount": 217,
+                      "language": "TypeScript (React)"
+                    }
+                  ]
+                },
+                {
                   "path": "src/web/components/FeynmanExplainModal.tsx",
                   "name": "FeynmanExplainModal.tsx",
                   "isDirectory": false,
@@ -965,8 +1182,8 @@
                   "path": "src/web/components/HowItWorks.tsx",
                   "name": "HowItWorks.tsx",
                   "isDirectory": false,
-                  "size": 17219,
-                  "lineCount": 389,
+                  "size": 14742,
+                  "lineCount": 330,
                   "language": "TypeScript (React)"
                 },
                 {
@@ -981,16 +1198,16 @@
                   "path": "src/web/components/McpConfigModal.tsx",
                   "name": "McpConfigModal.tsx",
                   "isDirectory": false,
-                  "size": 7324,
-                  "lineCount": 192,
+                  "size": 13187,
+                  "lineCount": 286,
                   "language": "TypeScript (React)"
                 },
                 {
                   "path": "src/web/components/Navbar.tsx",
                   "name": "Navbar.tsx",
                   "isDirectory": false,
-                  "size": 5382,
-                  "lineCount": 134,
+                  "size": 6014,
+                  "lineCount": 145,
                   "language": "TypeScript (React)"
                 },
                 {
@@ -1021,24 +1238,24 @@
                   "path": "src/web/components/WalkthroughTour.tsx",
                   "name": "WalkthroughTour.tsx",
                   "isDirectory": false,
-                  "size": 7782,
-                  "lineCount": 194,
+                  "size": 26972,
+                  "lineCount": 593,
                   "language": "TypeScript (React)"
                 },
                 {
                   "path": "src/web/components/WhatIsThis.tsx",
                   "name": "WhatIsThis.tsx",
                   "isDirectory": false,
-                  "size": 11447,
-                  "lineCount": 264,
+                  "size": 16441,
+                  "lineCount": 350,
                   "language": "TypeScript (React)"
                 },
                 {
                   "path": "src/web/components/WhereToChange.tsx",
                   "name": "WhereToChange.tsx",
                   "isDirectory": false,
-                  "size": 13905,
-                  "lineCount": 327,
+                  "size": 14853,
+                  "lineCount": 334,
                   "language": "TypeScript (React)"
                 }
               ]
@@ -1072,6 +1289,14 @@
       ]
     },
     {
+      "path": ".gitignore",
+      "name": ".gitignore",
+      "isDirectory": false,
+      "size": 60,
+      "lineCount": 8,
+      "language": "Text"
+    },
+    {
       "path": "index.html",
       "name": "index.html",
       "isDirectory": false,
@@ -1080,11 +1305,19 @@
       "language": "HTML"
     },
     {
+      "path": "LICENSE",
+      "name": "LICENSE",
+      "isDirectory": false,
+      "size": 5964,
+      "lineCount": 115,
+      "language": "Text"
+    },
+    {
       "path": "package.json",
       "name": "package.json",
       "isDirectory": false,
-      "size": 2219,
-      "lineCount": 76,
+      "size": 2284,
+      "lineCount": 78,
       "language": "JSON"
     },
     {
@@ -1094,6 +1327,14 @@
       "size": 80,
       "lineCount": 7,
       "language": "JavaScript"
+    },
+    {
+      "path": "README.md",
+      "name": "README.md",
+      "isDirectory": false,
+      "size": 8114,
+      "lineCount": 171,
+      "language": "Markdown"
     },
     {
       "path": "tailwind.config.js",

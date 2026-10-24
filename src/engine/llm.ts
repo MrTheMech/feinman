@@ -143,3 +143,71 @@ function extractSection(text: string, section: string, fallback: string): string
   }
   return fallback;
 }
+
+export async function answerTutorQuestion(
+  question: string,
+  file: string,
+  stepTitle: string,
+  stepSummary: string,
+  whatToNotice: string[],
+  projectSummary: string
+): Promise<{ answer: string; modelUsed: string }> {
+  const status = await checkModelStatus();
+  if (status.source === 'local-ollama') {
+    try {
+      const prompt = `You are Richard Feynman acting as a friendly code tutor for a developer exploring an unfamiliar project.
+Project: ${projectSummary}
+Current Step: ${stepTitle}
+Current File: ${file}
+Step Summary: ${stepSummary}
+Key points: ${whatToNotice.join('; ')}
+
+User Question: ${question}
+
+Give a direct, warm, concise, and punchy response explaining the code and answering their question clearly without fluff or jargon. If code is needed, show a short 2-3 line snippet.`;
+
+      const res = await fetch(`${currentConfig.endpoint}/api/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: status.activeModel,
+          prompt,
+          stream: false,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json() as { response?: string };
+        if (data.response) {
+          return {
+            answer: data.response.trim(),
+            modelUsed: `${status.activeModel} via Ollama`,
+          };
+        }
+      }
+    } catch {
+      // fallback
+    }
+  }
+
+  // Smart heuristic answer
+  const qLower = question.toLowerCase();
+  let answer = '';
+  if (qLower.includes('how') && (qLower.includes('connect') || qLower.includes('jump') || qLower.includes('flow'))) {
+    answer = `**${file}** connects to the rest of the application by exporting key utilities or handlers. Other components import it to delegate tasks here, keeping the architecture modular so individual parts can be tested independently.`;
+  } else if (qLower.includes('why') || qLower.includes('reason') || qLower.includes('decision')) {
+    answer = `This was structured around **separation of concerns**: by isolating this logic in \`${file}\`, changes to how ${stepTitle.toLowerCase()} operates won't break upstream callers or downstream database persistence.`;
+  } else if (qLower.includes('modify') || qLower.includes('change') || qLower.includes('add') || qLower.includes('example')) {
+    answer = `To modify **${file}**, inspect the exported functions first. Add your parameters or new methods there, then run the test suite to verify downstream consumers still match expectations.`;
+  } else if (qLower.includes('like i\'m 5') || qLower.includes('eli5') || qLower.includes('simple')) {
+    answer = `Think of this file like a recipe card in a kitchen: whenever the chef needs this specific dish made, they follow these exact steps so every customer gets the exact same quality!`;
+  } else {
+    answer = `In **${file}**, the primary responsibility is **${stepSummary}**. When navigating this part, keep in mind: ${whatToNotice.slice(0, 2).join(' and ')}.`;
+  }
+
+  return {
+    answer,
+    modelUsed: 'Feinman Heuristic Tutor',
+  };
+}
+

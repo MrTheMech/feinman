@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import { AnalysisContext, analyzeProject } from '../engine/analyzer.js';
 import { planCodeChange } from '../engine/changePlanner.js';
-import { checkModelStatus, explainWithFeynman, setLLMConfig, getLLMConfig } from '../engine/llm.js';
+import { checkModelStatus, explainWithFeynman, answerTutorQuestion, setLLMConfig, getLLMConfig } from '../engine/llm.js';
 import { generateSkillAndArtifacts } from '../skills/generator.js';
 import { FeinmanMCPServer, MCPRequest } from '../mcp/server.js';
 import { SAMPLE_PROJECTS } from './samples.js';
@@ -126,6 +126,32 @@ export function createApiRouter(
       });
     } catch (err: any) {
       res.status(500).json({ success: false, error: err.message || 'Explanation failed' });
+    }
+  });
+
+  // 5b. Ask Anything Chatbot Route for Walkthrough
+  router.post('/ask', async (req: Request, res: Response) => {
+    try {
+      const { question, file, stepTitle, stepSummary, whatToNotice } = req.body || {};
+      if (!question || !question.trim()) {
+        return res.status(400).json({ success: false, error: 'Question is required' });
+      }
+
+      const answerData = await answerTutorQuestion(
+        question,
+        file || '',
+        stepTitle || '',
+        stepSummary || '',
+        whatToNotice || [],
+        currentContext.analysis.whatIsThis.summary
+      );
+
+      res.json({
+        success: true,
+        data: answerData,
+      });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message || 'Tutor query failed' });
     }
   });
 

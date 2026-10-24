@@ -9,7 +9,8 @@ import {
   Footprints, 
   Cpu, 
   Plug,
-  RefreshCw
+  RefreshCw,
+  Terminal
 } from 'lucide-react';
 import { ProjectAnalysis } from '../../engine/types.js';
 
@@ -94,6 +95,16 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right Status Actions */}
         <div className="flex items-center gap-2 shrink-0">
+          {/* AGY & Claude Code Terminal Options Button */}
+          <button
+            onClick={onOpenMcpModal}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/40 text-amber-300 hover:bg-amber-500/20 text-xs font-mono btn-tactile transition-colors"
+            title="Run Feinman in Google Antigravity (AGY) terminal or Claude Code terminal"
+          >
+            <Terminal className="w-3.5 h-3.5 text-amber-400" />
+            <span className="hidden sm:inline font-sans text-[11px] font-bold text-amber-300">AGY & Claude</span>
+          </button>
+
           {/* MCP & Skills Status Pill */}
           <button
             onClick={onOpenMcpModal}

@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import { analyzeProject } from '../engine/analyzer.js';
 import { planCodeChange } from '../engine/changePlanner.js';
-import { checkModelStatus, explainWithFeynman, setLLMConfig, getLLMConfig } from '../engine/llm.js';
+import { checkModelStatus, explainWithFeynman, answerTutorQuestion, setLLMConfig, getLLMConfig } from '../engine/llm.js';
 import { generateSkillAndArtifacts } from '../skills/generator.js';
 import { SAMPLE_PROJECTS } from './samples.js';
 export function createApiRouter(initialContext, mcpServer) {
@@ -102,6 +102,23 @@ export function createApiRouter(initialContext, mcpServer) {
         }
         catch (err) {
             res.status(500).json({ success: false, error: err.message || 'Explanation failed' });
+        }
+    });
+    // 5b. Ask Anything Chatbot Route for Walkthrough
+    router.post('/ask', async (req, res) => {
+        try {
+            const { question, file, stepTitle, stepSummary, whatToNotice } = req.body || {};
+            if (!question || !question.trim()) {
+                return res.status(400).json({ success: false, error: 'Question is required' });
+            }
+            const answerData = await answerTutorQuestion(question, file || '', stepTitle || '', stepSummary || '', whatToNotice || [], currentContext.analysis.whatIsThis.summary);
+            res.json({
+                success: true,
+                data: answerData,
+            });
+        }
+        catch (err) {
+            res.status(500).json({ success: false, error: err.message || 'Tutor query failed' });
         }
     });
     // 6. MCP HTTP Endpoint (execute MCP JSON-RPC over HTTP)

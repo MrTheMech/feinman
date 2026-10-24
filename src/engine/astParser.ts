@@ -144,11 +144,20 @@ function resolveAndLink(
   imports: Map<string, Set<string>>,
   importedBy: Map<string, Set<string>>
 ) {
-  const possibleExtensions = ['', '.ts', '.tsx', '.js', '.jsx', '/index.ts', '/index.js', '/index.tsx'];
   const rawTarget = path.join(sourceDir, importPath).replace(/\\/g, '/');
+  const baseTarget = rawTarget.replace(/\.(js|jsx|ts|tsx)$/, '');
+  const candidates = [
+    rawTarget,
+    `${baseTarget}.ts`,
+    `${baseTarget}.tsx`,
+    `${baseTarget}.js`,
+    `${baseTarget}.jsx`,
+    `${baseTarget}/index.ts`,
+    `${baseTarget}/index.tsx`,
+    `${baseTarget}/index.js`,
+  ];
 
-  for (const ext of possibleExtensions) {
-    const candidate = `${rawTarget}${ext}`.replace(/\\/g, '/');
+  for (const candidate of candidates) {
     if (fileSet.has(candidate) && candidate !== sourceFile) {
       imports.get(sourceFile)?.add(candidate);
       importedBy.get(candidate)?.add(sourceFile);
