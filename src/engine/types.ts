@@ -184,7 +184,7 @@ export interface ChangePlanResult {
 }
 
 export interface LLMConfig {
-  provider: 'ollama' | 'openai-compatible' | 'heuristic';
+  provider: 'ollama' | 'gemini' | 'openai-compatible' | 'heuristic';
   endpoint: string;
   model: string;
   apiKey?: string;

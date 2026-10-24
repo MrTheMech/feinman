@@ -1,8 +1,8 @@
 import path from 'path';
 let currentConfig = {
-    provider: 'ollama',
-    endpoint: 'http://localhost:11434',
-    model: 'llama3.2',
+    provider: process.env.GEMINI_API_KEY ? 'gemini' : 'ollama',
+    endpoint: process.env.OLLAMA_HOST || 'http://localhost:11434',
+    model: process.env.GEMMA_MODEL || 'gemma-4',
 };
 export function setLLMConfig(config) {
     currentConfig = { ...currentConfig, ...config };
@@ -11,7 +11,20 @@ export function getLLMConfig() {
     return currentConfig;
 }
 export async function checkModelStatus() {
-    // 1. Try Ollama tags endpoint
+    // 1. Check if Gemini / Gemma API Key is present in environment
+    const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+    if (geminiKey) {
+        const model = process.env.GEMMA_MODEL || 'gemma-4';
+        return {
+            available: true,
+            provider: `Google Gemini API (${model})`,
+            endpoint: 'https://generativelanguage.googleapis.com',
+            models: [model, 'gemini-2.0-flash', 'gemma-2-9b-it'],
+            activeModel: model,
+            source: 'gemini-api',
+        };
+    }
+    // 2. Try Ollama tags endpoint
     try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 1500);
@@ -21,8 +34,10 @@ export async function checkModelStatus() {
         clearTimeout(timeoutId);
         if (res.ok) {
             const data = await res.json();
-            const modelList = data.models ? data.models.map(m => m.name) : ['llama3.2'];
-            const active = modelList.includes(currentConfig.model) ? currentConfig.model : (modelList[0] || 'llama3.2');
+            const modelList = data.models ? data.models.map(m => m.name) : ['gemma-4', 'llama3.2'];
+            // Prefer Gemma if available in Ollama
+            const gemmaModel = modelList.find(m => m.toLowerCase().includes('gemma'));
+            const active = gemmaModel || (modelList.includes(currentConfig.model) ? currentConfig.model : (modelList[0] || 'llama3.2'));
             return {
                 available: true,
                 provider: 'Ollama (Local Open-Weight Models)',
@@ -36,7 +51,7 @@ export async function checkModelStatus() {
     catch {
         // Ollama not reachable or timed out
     }
-    // 2. Fallback to Built-in Deterministic Heuristic Engine
+    // 3. Fallback to Built-in Deterministic Heuristic Engine
     return {
         available: true,
         provider: 'Feinman Deterministic Heuristic AST Engine (Offline & Fast)',
@@ -46,8 +61,59 @@ export async function checkModelStatus() {
         source: 'builtin-heuristic',
     };
 }
+async function callGeminiApi(prompt) {
+    const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+    if (!geminiKey)
+        return null;
+    try {
+        const model = process.env.GEMMA_MODEL || 'gemini-1.5-flash';
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`;
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }],
+            }),
+        });
+        if (res.ok) {
+            const data = await res.json();
+            return data?.candidates?.[0]?.content?.parts?.[0]?.text || null;
+        }
+    }
+    catch {
+        // Fallback
+    }
+    return null;
+}
 export async function explainWithFeynman(targetName, kind, codeSnippet, filePath, projectSummary) {
     const status = await checkModelStatus();
+    const prompt = `You are Richard Feynman explaining a software component to a junior engineer who wants crystal clarity without jargon.
+Component Name: ${targetName} (${kind})
+File: ${filePath}
+Project Context: ${projectSummary}
+Code Snippet:
+\`\`\`
+${codeSnippet.slice(0, 1000)}
+\`\`\`
+
+Provide an explanation with these 4 sections clearly separated:
+1. SUMMARY: 1-2 plain English sentences on what this does.
+2. ANALOGY: A vivid real-world analogy (like a postal office, restaurant, toolbox).
+3. INPUTS_OUTPUTS: What goes in, and what comes out.
+4. CONNECTIONS: How it talks to the rest of the app.`;
+    // If Gemini API is active
+    if (status.source === 'gemini-api') {
+        const resp = await callGeminiApi(prompt);
+        if (resp) {
+            return {
+                plainSummary: extractSection(resp, 'SUMMARY', `${targetName} manages and coordinates core logic for ${filePath}.`),
+                feynmanAnalogy: extractSection(resp, 'ANALOGY', `Think of ${targetName} like a skilled clerk verifying paperwork before processing.`),
+                inputsAndOutputs: extractSection(resp, 'INPUTS_OUTPUTS', 'Takes incoming parameters and returns verified data or state changes.'),
+                connections: extractSection(resp, 'CONNECTIONS', `Directly referenced by callers in ${path.dirname(filePath)}.`),
+                modelUsed: `${status.activeModel} (Gemini/Gemma API)`,
+            };
+        }
+    }
     // If local Ollama is active, call Ollama generate API
     if (status.source === 'local-ollama') {
         try {
@@ -111,9 +177,7 @@ function extractSection(text, section, fallback) {
 }
 export async function answerTutorQuestion(question, file, stepTitle, stepSummary, whatToNotice, projectSummary) {
     const status = await checkModelStatus();
-    if (status.source === 'local-ollama') {
-        try {
-            const prompt = `You are Richard Feynman acting as a friendly code tutor for a developer exploring an unfamiliar project.
+    const prompt = `You are Richard Feynman acting as a friendly code tutor for a developer exploring an unfamiliar project.
 Project: ${projectSummary}
 Current Step: ${stepTitle}
 Current File: ${file}
@@ -123,6 +187,17 @@ Key points: ${whatToNotice.join('; ')}
 User Question: ${question}
 
 Give a direct, warm, concise, and punchy response explaining the code and answering their question clearly without fluff or jargon. If code is needed, show a short 2-3 line snippet.`;
+    if (status.source === 'gemini-api') {
+        const resp = await callGeminiApi(prompt);
+        if (resp) {
+            return {
+                answer: resp.trim(),
+                modelUsed: `${status.activeModel} (Gemini/Gemma API)`,
+            };
+        }
+    }
+    if (status.source === 'local-ollama') {
+        try {
             const res = await fetch(`${currentConfig.endpoint}/api/generate`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
