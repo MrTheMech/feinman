@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "feinman": {
+      "command": "feynstart",
+      "args": [
+        "--mcp",
+        "C:\\feinman"
+      ],
+      "env": {}
+    }
+  }
+}

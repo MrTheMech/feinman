@@ -1,0 +1,1131 @@
+{
+  "id": "feinman",
+  "name": "feinman",
+  "rootPath": "C:\\feinman",
+  "isSample": false,
+  "analyzedAt": "2026-10-24T10:22:55.167Z",
+  "fileCount": 43,
+  "totalLines": 7502,
+  "primaryLanguage": "TypeScript",
+  "whatIsThis": {
+    "summary": "AI-powered tool and MCP server that makes unfamiliar codebases understandable to humans. Built on foundational ideas and schemas from Understand-Anything (Egonex-AI) and Repomix.",
+    "problemSolved": "Helps users build and run feinman with verified tooling and clear modular structure.",
+    "techStack": [
+      {
+        "name": "chalk",
+        "category": "library",
+        "role": "Colors and styles terminal output text for command line readability",
+        "version": "4.1.2",
+        "confidence": "verified"
+      },
+      {
+        "name": "commander",
+        "category": "library",
+        "role": "Parses command-line arguments, options, and commands for the CLI",
+        "version": "12.1.0",
+        "confidence": "verified"
+      },
+      {
+        "name": "cors",
+        "category": "library",
+        "role": "Security middleware allowing the API to accept requests from web browsers on other ports",
+        "version": "2.8.5",
+        "confidence": "verified"
+      },
+      {
+        "name": "express",
+        "category": "framework",
+        "role": "Handles incoming HTTP requests, API routes, and middleware for the backend",
+        "version": "4.21.1",
+        "confidence": "verified"
+      },
+      {
+        "name": "ws",
+        "category": "library",
+        "role": "Manages real-time bidirectional WebSocket connections",
+        "version": "8.18.0",
+        "confidence": "verified"
+      },
+      {
+        "name": "lucide-react",
+        "category": "library",
+        "role": "Modern, clean icon pack for buttons, status indicators, and navigation",
+        "version": "0.453.0",
+        "confidence": "verified"
+      },
+      {
+        "name": "react",
+        "category": "framework",
+        "role": "Builds the user interface components and handles state updates in the browser",
+        "version": "18.3.1",
+        "confidence": "verified"
+      },
+      {
+        "name": "react-dom",
+        "category": "framework",
+        "role": "Renders React components into web browser DOM elements",
+        "version": "18.3.1",
+        "confidence": "verified"
+      },
+      {
+        "name": "tailwindcss",
+        "category": "library",
+        "role": "Utility-first styling system used to style UI components without custom CSS files",
+        "version": "3.4.14",
+        "confidence": "verified"
+      },
+      {
+        "name": "vite",
+        "category": "tool",
+        "role": "Lightning-fast development server and asset bundler for the frontend",
+        "version": "5.4.8",
+        "confidence": "verified"
+      }
+    ],
+    "entryPoints": [
+      {
+        "file": "bin/feynstart.js",
+        "description": "Command line CLI executable entrypoint",
+        "exportedSymbols": [],
+        "isPrimary": true
+      },
+      {
+        "file": "src/server/index.ts",
+        "description": "Backend server bootstrap file starting the HTTP listener",
+        "exportedSymbols": [],
+        "isPrimary": false
+      }
+    ],
+    "quickstart": {
+      "installCmd": "npm install",
+      "devCmd": "npm run dev",
+      "testCmd": "npm test",
+      "buildCmd": "npm run build"
+    }
+  },
+  "howItWorks": {
+    "mentalModel": "Think of **feinman** like a well-organized clockwork workshop: the **entrypoints** accept external inputs (commands, clicks, or HTTP requests) and direct them to specialized workbenches (CLI & Entrypoints, API & Routing Layer, Core Logic & Intelligence, UI & User Experience, MCP & Agent Skills, Utilities & Configuration). Each part does one job with clear boundaries, ensuring that changes to the user interface or external adapters do not disrupt the core algorithms underneath.",
+    "subsystems": [
+      {
+        "id": "cli",
+        "name": "CLI & Entrypoints",
+        "color": "#f59e0b",
+        "description": "Parses user flags and terminal arguments",
+        "files": [
+          "bin/feynstart.js"
+        ],
+        "responsibilities": [
+          "Parses user flags and terminal arguments",
+          "Initializes application runtimes and settings",
+          "Dispatches commands to core execution engines"
+        ],
+        "dependencies": []
+      },
+      {
+        "id": "api",
+        "name": "API & Routing Layer",
+        "color": "#0284c7",
+        "description": "Listens for incoming HTTP and WebSocket requests",
+        "files": [
+          "src/mcp/server.ts",
+          "src/server/api.ts",
+          "src/server/index.ts",
+          "src/server/samples.ts",
+          "tsconfig.server.json"
+        ],
+        "responsibilities": [
+          "Listens for incoming HTTP and WebSocket requests",
+          "Validates request payloads and query parameters",
+          "Routes requests to corresponding business services"
+        ],
+        "dependencies": []
+      },
+      {
+        "id": "core",
+        "name": "Core Logic & Intelligence",
+        "color": "#8b5cf6",
+        "description": "Executes primary domain calculations and algorithms",
+        "files": [
+          "src/engine/analyzer.ts",
+          "src/engine/architecture.ts",
+          "src/engine/astParser.ts",
+          "src/engine/changePlanner.ts",
+          "src/engine/detector.ts",
+          "src/engine/llm.ts",
+          "src/engine/scanner.ts",
+          "src/engine/types.ts",
+          "src/engine/walkthrough.ts"
+        ],
+        "responsibilities": [
+          "Executes primary domain calculations and algorithms",
+          "Coordinates state transitions and data transformations",
+          "Enforces business rules and validation constraints"
+        ],
+        "dependencies": []
+      },
+      {
+        "id": "ui",
+        "name": "UI & User Experience",
+        "color": "#ec4899",
+        "description": "Renders visual user interfaces and reactive layouts",
+        "files": [
+          "src/web/App.tsx",
+          "src/web/components/FeynmanExplainModal.tsx",
+          "src/web/components/HowItWorks.tsx",
+          "src/web/components/HowToMaintain.tsx",
+          "src/web/components/McpConfigModal.tsx",
+          "src/web/components/Navbar.tsx",
+          "src/web/components/ScanModal.tsx",
+          "src/web/components/SettingsModal.tsx",
+          "src/web/components/SourceViewerModal.tsx",
+          "src/web/components/WalkthroughTour.tsx",
+          "src/web/components/WhatIsThis.tsx",
+          "src/web/components/WhereToChange.tsx",
+          "src/web/index.css",
+          "src/web/main.tsx"
+        ],
+        "responsibilities": [
+          "Renders visual user interfaces and reactive layouts",
+          "Captures user interactions, form inputs, and clicks",
+          "Communicates with backend APIs and visualizes state"
+        ],
+        "dependencies": []
+      },
+      {
+        "id": "mcp-skills",
+        "name": "MCP & Agent Skills",
+        "color": "#06b6d4",
+        "description": "Exposes standard Model Context Protocol tools and resources",
+        "files": [
+          ".agents/skills/feinman/SKILL.md",
+          ".feinman/mcp-config.json",
+          "scratch/test-mcp-call.js",
+          "scratch/test-mcp-tools.js",
+          "scratch/test-mcp.js",
+          "src/skills/generator.ts"
+        ],
+        "responsibilities": [
+          "Exposes standard Model Context Protocol tools and resources",
+          "Generates self-describing skill packs for AI agents",
+          "Bridges external AI workflows with the repository engine"
+        ],
+        "dependencies": []
+      },
+      {
+        "id": "utils",
+        "name": "Utilities & Configuration",
+        "color": "#64748b",
+        "description": "Provides reusable helper functions and formatting utilities",
+        "files": [
+          ".feinman/feinman.json",
+          ".feinman/SKILL.md",
+          "index.html",
+          "package.json",
+          "postcss.config.js",
+          "tailwind.config.js",
+          "tsconfig.json",
+          "vite.config.ts"
+        ],
+        "responsibilities": [
+          "Provides reusable helper functions and formatting utilities",
+          "Manages environment configuration and constants",
+          "Handles shared errors and logging wrappers"
+        ],
+        "dependencies": []
+      }
+    ],
+    "nodes": [
+      {
+        "id": "bin/feynstart.js",
+        "label": "feynstart.js",
+        "type": "entry",
+        "subsystem": "CLI & Entrypoints",
+        "file": "bin/feynstart.js",
+        "description": "CLI & Entrypoints: bin/feynstart.js"
+      },
+      {
+        "id": "src/mcp/server.ts",
+        "label": "server.ts",
+        "type": "service",
+        "subsystem": "API & Routing Layer",
+        "file": "src/mcp/server.ts",
+        "description": "API & Routing Layer: src/mcp/server.ts"
+      },
+      {
+        "id": "src/server/api.ts",
+        "label": "api.ts",
+        "type": "service",
+        "subsystem": "API & Routing Layer",
+        "file": "src/server/api.ts",
+        "description": "API & Routing Layer: src/server/api.ts"
+      },
+      {
+        "id": "src/server/index.ts",
+        "label": "index.ts",
+        "type": "service",
+        "subsystem": "API & Routing Layer",
+        "file": "src/server/index.ts",
+        "description": "API & Routing Layer: src/server/index.ts"
+      },
+      {
+        "id": "src/engine/analyzer.ts",
+        "label": "analyzer.ts",
+        "type": "core",
+        "subsystem": "Core Logic & Intelligence",
+        "file": "src/engine/analyzer.ts",
+        "description": "Core Logic & Intelligence: src/engine/analyzer.ts"
+      },
+      {
+        "id": "src/engine/architecture.ts",
+        "label": "architecture.ts",
+        "type": "core",
+        "subsystem": "Core Logic & Intelligence",
+        "file": "src/engine/architecture.ts",
+        "description": "Core Logic & Intelligence: src/engine/architecture.ts"
+      },
+      {
+        "id": "src/engine/astParser.ts",
+        "label": "astParser.ts",
+        "type": "core",
+        "subsystem": "Core Logic & Intelligence",
+        "file": "src/engine/astParser.ts",
+        "description": "Core Logic & Intelligence: src/engine/astParser.ts"
+      },
+      {
+        "id": "src/web/App.tsx",
+        "label": "App.tsx",
+        "type": "ui",
+        "subsystem": "UI & User Experience",
+        "file": "src/web/App.tsx",
+        "description": "UI & User Experience: src/web/App.tsx"
+      },
+      {
+        "id": "src/web/components/FeynmanExplainModal.tsx",
+        "label": "FeynmanExplainModal.tsx",
+        "type": "ui",
+        "subsystem": "UI & User Experience",
+        "file": "src/web/components/FeynmanExplainModal.tsx",
+        "description": "UI & User Experience: src/web/components/FeynmanExplainModal.tsx"
+      },
+      {
+        "id": "src/web/components/HowItWorks.tsx",
+        "label": "HowItWorks.tsx",
+        "type": "ui",
+        "subsystem": "UI & User Experience",
+        "file": "src/web/components/HowItWorks.tsx",
+        "description": "UI & User Experience: src/web/components/HowItWorks.tsx"
+      },
+      {
+        "id": ".agents/skills/feinman/SKILL.md",
+        "label": "SKILL.md",
+        "type": "core",
+        "subsystem": "MCP & Agent Skills",
+        "file": ".agents/skills/feinman/SKILL.md",
+        "description": "MCP & Agent Skills: .agents/skills/feinman/SKILL.md"
+      },
+      {
+        "id": ".feinman/mcp-config.json",
+        "label": "mcp-config.json",
+        "type": "core",
+        "subsystem": "MCP & Agent Skills",
+        "file": ".feinman/mcp-config.json",
+        "description": "MCP & Agent Skills: .feinman/mcp-config.json"
+      },
+      {
+        "id": "scratch/test-mcp-call.js",
+        "label": "test-mcp-call.js",
+        "type": "core",
+        "subsystem": "MCP & Agent Skills",
+        "file": "scratch/test-mcp-call.js",
+        "description": "MCP & Agent Skills: scratch/test-mcp-call.js"
+      },
+      {
+        "id": ".feinman/feinman.json",
+        "label": "feinman.json",
+        "type": "util",
+        "subsystem": "Utilities & Configuration",
+        "file": ".feinman/feinman.json",
+        "description": "Utilities & Configuration: .feinman/feinman.json"
+      },
+      {
+        "id": ".feinman/SKILL.md",
+        "label": "SKILL.md",
+        "type": "util",
+        "subsystem": "Utilities & Configuration",
+        "file": ".feinman/SKILL.md",
+        "description": "Utilities & Configuration: .feinman/SKILL.md"
+      },
+      {
+        "id": "index.html",
+        "label": "index.html",
+        "type": "util",
+        "subsystem": "Utilities & Configuration",
+        "file": "index.html",
+        "description": "Utilities & Configuration: index.html"
+      }
+    ],
+    "edges": [
+      {
+        "from": "bin/feynstart.js",
+        "to": "src/mcp/server.ts",
+        "label": "connects to"
+      },
+      {
+        "from": "src/server/index.ts",
+        "to": "src/engine/analyzer.ts",
+        "label": "connects to"
+      },
+      {
+        "from": "src/engine/astParser.ts",
+        "to": "src/web/App.tsx",
+        "label": "connects to"
+      },
+      {
+        "from": "src/web/components/HowItWorks.tsx",
+        "to": ".agents/skills/feinman/SKILL.md",
+        "label": "connects to"
+      },
+      {
+        "from": "scratch/test-mcp-call.js",
+        "to": ".feinman/feinman.json",
+        "label": "connects to"
+      }
+    ],
+    "dataFlows": [
+      {
+        "id": "primary-execution",
+        "title": "Standard Execution & Request Cycle",
+        "description": "The journey of data from user trigger to output presentation.",
+        "steps": [
+          {
+            "step": 1,
+            "actor": "User / Client",
+            "action": "Initiates a request or triggers a CLI command with arguments.",
+            "fileRef": "bin/feynstart.js"
+          },
+          {
+            "step": 2,
+            "actor": "Entry & Routing Layer",
+            "action": "Parses parameters, validates input, and delegates to domain services.",
+            "fileRef": "src/mcp/server.ts"
+          },
+          {
+            "step": 3,
+            "actor": "Core Engine",
+            "action": "Processes business rules, updates internal state, and queries required resources.",
+            "fileRef": "src/engine/analyzer.ts"
+          },
+          {
+            "step": 4,
+            "actor": "Output / UI",
+            "action": "Returns formatted results, streams responses, or renders updated components.",
+            "fileRef": "src/web/App.tsx"
+          }
+        ]
+      }
+    ]
+  },
+  "whereToChange": {
+    "scenarios": [
+      {
+        "title": "Add an API route or endpoint",
+        "query": "Add an API route or endpoint",
+        "summary": "To implement \"Add an API route or endpoint\", start in **src/server/api.ts** where the primary logic resides. Impact is localized.",
+        "targetFiles": [
+          {
+            "file": "src/server/api.ts",
+            "reason": "Filename matches \"api\"; Contains symbol \"createApiRouter\" (line 16)",
+            "confidence": 0.95,
+            "recommendedLines": "Around line 16 (createApiRouter)"
+          },
+          {
+            "file": ".feinman/feinman.json",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.75
+          },
+          {
+            "file": "src/engine/architecture.ts",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.75
+          },
+          {
+            "file": "src/engine/changePlanner.ts",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.75
+          }
+        ],
+        "blastRadius": [],
+        "checklist": [
+          "1. Inspect **src/server/api.ts** to understand current signatures and behavior.",
+          "2. Update supporting logic across **.feinman/feinman.json, src/engine/architecture.ts, src/engine/changePlanner.ts** to ensure parameter and type consistency.",
+          "3. Check downstream dependents: verify that files importing this module (call sites) receive expected return types.",
+          "4. Run the project tests to verify no regressions were introduced."
+        ]
+      },
+      {
+        "title": "Add a new configuration or environment variable",
+        "query": "Add a new configuration or environment variable",
+        "summary": "To implement \"Add a new configuration or environment variable\", start in **.feinman/feinman.json** where the primary logic resides. Impact is localized.",
+        "targetFiles": [
+          {
+            "file": ".feinman/feinman.json",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.95
+          },
+          {
+            "file": "src/engine/changePlanner.ts",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.95
+          },
+          {
+            "file": "src/engine/architecture.ts",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.95
+          },
+          {
+            "file": "src/engine/detector.ts",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.95
+          }
+        ],
+        "blastRadius": [],
+        "checklist": [
+          "1. Inspect **.feinman/feinman.json** to understand current signatures and behavior.",
+          "2. Update supporting logic across **src/engine/changePlanner.ts, src/engine/architecture.ts, src/engine/detector.ts** to ensure parameter and type consistency.",
+          "3. Check downstream dependents: verify that files importing this module (call sites) receive expected return types.",
+          "4. Run the project tests to verify no regressions were introduced."
+        ]
+      },
+      {
+        "title": "Update database model or schema",
+        "query": "Update database model or schema",
+        "summary": "To implement \"Update database model or schema\", start in **src/engine/llm.ts** where the primary logic resides. Impact is localized.",
+        "targetFiles": [
+          {
+            "file": "src/engine/llm.ts",
+            "reason": "Contains symbol \"ModelStatus\" (line 4); Contains symbol \"checkModelStatus\" (line 27)",
+            "confidence": 0.95,
+            "recommendedLines": "Around line 4 (ModelStatus)"
+          },
+          {
+            "file": "src/engine/architecture.ts",
+            "reason": "Contains symbol \"buildArchitectureModel\" (line 94)",
+            "confidence": 0.95,
+            "recommendedLines": "Around line 94 (buildArchitectureModel)"
+          },
+          {
+            "file": ".feinman/feinman.json",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.75
+          },
+          {
+            "file": "src/engine/changePlanner.ts",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.75
+          }
+        ],
+        "blastRadius": [],
+        "checklist": [
+          "1. Inspect **src/engine/llm.ts** to understand current signatures and behavior.",
+          "2. Update supporting logic across **src/engine/architecture.ts, .feinman/feinman.json, src/engine/changePlanner.ts** to ensure parameter and type consistency.",
+          "3. Check downstream dependents: verify that files importing this module (call sites) receive expected return types.",
+          "4. Run the project tests to verify no regressions were introduced."
+        ]
+      },
+      {
+        "title": "Modify UI component styling or layout",
+        "query": "Modify UI component styling or layout",
+        "summary": "To implement \"Modify UI component styling or layout\", start in **src/web/components/HowItWorks.tsx** where the primary logic resides. Impact is localized.",
+        "targetFiles": [
+          {
+            "file": "src/web/components/HowItWorks.tsx",
+            "reason": "Directory path matches \"component\"",
+            "confidence": 0.95
+          },
+          {
+            "file": ".feinman/feinman.json",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.95
+          },
+          {
+            "file": "src/engine/changePlanner.ts",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.95
+          },
+          {
+            "file": "src/web/components/FeynmanExplainModal.tsx",
+            "reason": "Directory path matches \"component\"",
+            "confidence": 0.95
+          }
+        ],
+        "blastRadius": [],
+        "checklist": [
+          "1. Inspect **src/web/components/HowItWorks.tsx** to understand current signatures and behavior.",
+          "2. Update supporting logic across **.feinman/feinman.json, src/engine/changePlanner.ts, src/web/components/FeynmanExplainModal.tsx** to ensure parameter and type consistency.",
+          "3. Check downstream dependents: verify that files importing this module (call sites) receive expected return types.",
+          "4. Run the project tests to verify no regressions were introduced."
+        ]
+      },
+      {
+        "title": "Write a new unit test",
+        "query": "Write a new unit test",
+        "summary": "To implement \"Write a new unit test\", start in **.feinman/feinman.json** where the primary logic resides. Impact is localized.",
+        "targetFiles": [
+          {
+            "file": ".feinman/feinman.json",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.95
+          },
+          {
+            "file": "src/engine/changePlanner.ts",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.95
+          },
+          {
+            "file": "src/server/samples.ts",
+            "reason": "Relevant module in the target feature area",
+            "confidence": 0.95
+          },
+          {
+            "file": "scratch/test-mcp-call.js",
+            "reason": "Filename matches \"test\"",
+            "confidence": 0.95
+          }
+        ],
+        "blastRadius": [],
+        "checklist": [
+          "1. Inspect **.feinman/feinman.json** to understand current signatures and behavior.",
+          "2. Update supporting logic across **src/engine/changePlanner.ts, src/server/samples.ts, scratch/test-mcp-call.js** to ensure parameter and type consistency.",
+          "3. Check downstream dependents: verify that files importing this module (call sites) receive expected return types.",
+          "4. Run the project tests to verify no regressions were introduced."
+        ]
+      }
+    ]
+  },
+  "howToMaintain": {
+    "testFramework": "None detected",
+    "testDir": "tests",
+    "testCommand": "npm test",
+    "debuggingTips": [
+      "Run with `npm run dev` to launch local development environment.",
+      "Inspect console outputs and terminal logs for unhandled rejections or runtime warnings.",
+      "Set debugger breakpoints in the primary entrypoints (bin/feynstart.js, src/server/index.ts)."
+    ],
+    "envVars": [],
+    "gotchas": [
+      {
+        "title": "Respect Subsystem Boundaries",
+        "description": "Avoid importing UI components directly into server or core engine modules to maintain clean layering.",
+        "severity": "info"
+      },
+      {
+        "title": "Verified Configuration",
+        "description": "Dependencies and scripts are parsed directly from project manifests (e.g. package.json, pyproject.toml).",
+        "severity": "info"
+      }
+    ]
+  },
+  "walkthrough": [
+    {
+      "stepNumber": 1,
+      "title": "The Starting Gate: Entry Point & Bootstrapping",
+      "targetFile": "bin/feynstart.js",
+      "keyLines": [
+        1,
+        40
+      ],
+      "summary": "This is where execution begins when you run the application. It parses initial configuration, registers dependencies, and kicks off the main runtime loop.",
+      "whatToNotice": [
+        "Notice how command line flags or environment configurations are parsed.",
+        "Follow how services, databases, or HTTP listeners are instantiated.",
+        "Observe the primary dispatch call that transfers control to the core modules."
+      ],
+      "conceptExplained": "Like opening the front door of a building: everything gets unlocked and initialized here before visitors arrive."
+    },
+    {
+      "stepNumber": 2,
+      "title": "The Blueprint: Core Data Models & Schemas",
+      "targetFile": "src/engine/types.ts",
+      "keyLines": [
+        1,
+        50
+      ],
+      "summary": "Understanding the data structures is the fastest way to understand any program. This file defines the shapes, entities, and contracts used across the entire codebase.",
+      "whatToNotice": [
+        "Look at the primary nouns in this system (e.g. Project, Task, User, Config).",
+        "Identify which fields are required versus optional.",
+        "See how validation rules or relationships are expressed."
+      ],
+      "conceptExplained": "Fred Brooks famous rule: Show me your flowcharts and conceal your tables, and I shall continue to be mystified. Show me your tables, and I won’t usually need your flowcharts; they’ll be obvious."
+    },
+    {
+      "stepNumber": 3,
+      "title": "The Workhorse: Core Business Logic",
+      "targetFile": "src/engine/analyzer.ts",
+      "keyLines": [
+        1,
+        60
+      ],
+      "summary": "This is where the actual problem is solved. It takes raw inputs, applies the application’s domain rules, and produces calculated results or state transitions.",
+      "whatToNotice": [
+        "Notice the primary functions or methods doing the heavy lifting.",
+        "Observe how errors are caught and surfaced.",
+        "Note how side-effects (like disk writes or network calls) are kept isolated."
+      ],
+      "conceptExplained": "The kitchen of the restaurant: this is where the raw ingredients (data models) get transformed into finished meals."
+    },
+    {
+      "stepNumber": 4,
+      "title": "The Counter: API Routes & User Interface",
+      "targetFile": "src/web/App.tsx",
+      "keyLines": [
+        1,
+        50
+      ],
+      "summary": "How the outside world interacts with this system. It receives requests, validates permissions, calls the core engine, and packages up the response.",
+      "whatToNotice": [
+        "How parameters and inputs from users or external systems are received.",
+        "The handoff point where the interface delegates work to the core services.",
+        "How HTTP response codes or visual feedback states are returned."
+      ],
+      "conceptExplained": "The storefront or service desk: it speaks the customer’s language and coordinates with the kitchen in the back."
+    }
+  ],
+  "fileTree": [
+    {
+      "path": ".agents",
+      "name": ".agents",
+      "isDirectory": true,
+      "children": [
+        {
+          "path": ".agents/skills",
+          "name": "skills",
+          "isDirectory": true,
+          "children": [
+            {
+              "path": ".agents/skills/feinman",
+              "name": "feinman",
+              "isDirectory": true,
+              "children": [
+                {
+                  "path": ".agents/skills/feinman/SKILL.md",
+                  "name": "SKILL.md",
+                  "isDirectory": false,
+                  "size": 5245,
+                  "lineCount": 111,
+                  "language": "Markdown"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": ".feinman",
+      "name": ".feinman",
+      "isDirectory": true,
+      "children": [
+        {
+          "path": ".feinman/feinman.json",
+          "name": "feinman.json",
+          "isDirectory": false,
+          "size": 39286,
+          "lineCount": 1131,
+          "language": "JSON"
+        },
+        {
+          "path": ".feinman/mcp-config.json",
+          "name": "mcp-config.json",
+          "isDirectory": false,
+          "size": 158,
+          "lineCount": 12,
+          "language": "JSON"
+        },
+        {
+          "path": ".feinman/SKILL.md",
+          "name": "SKILL.md",
+          "isDirectory": false,
+          "size": 5245,
+          "lineCount": 111,
+          "language": "Markdown"
+        }
+      ]
+    },
+    {
+      "path": "bin",
+      "name": "bin",
+      "isDirectory": true,
+      "children": [
+        {
+          "path": "bin/feynstart.js",
+          "name": "feynstart.js",
+          "isDirectory": false,
+          "size": 4406,
+          "lineCount": 116,
+          "language": "JavaScript"
+        }
+      ]
+    },
+    {
+      "path": "scratch",
+      "name": "scratch",
+      "isDirectory": true,
+      "children": [
+        {
+          "path": "scratch/test-mcp-call.js",
+          "name": "test-mcp-call.js",
+          "isDirectory": false,
+          "size": 650,
+          "lineCount": 27,
+          "language": "JavaScript"
+        },
+        {
+          "path": "scratch/test-mcp-tools.js",
+          "name": "test-mcp-tools.js",
+          "isDirectory": false,
+          "size": 559,
+          "lineCount": 23,
+          "language": "JavaScript"
+        },
+        {
+          "path": "scratch/test-mcp.js",
+          "name": "test-mcp.js",
+          "isDirectory": false,
+          "size": 427,
+          "lineCount": 21,
+          "language": "JavaScript"
+        }
+      ]
+    },
+    {
+      "path": "src",
+      "name": "src",
+      "isDirectory": true,
+      "children": [
+        {
+          "path": "src/engine",
+          "name": "engine",
+          "isDirectory": true,
+          "children": [
+            {
+              "path": "src/engine/analyzer.ts",
+              "name": "analyzer.ts",
+              "isDirectory": false,
+              "size": 3465,
+              "lineCount": 102,
+              "language": "TypeScript"
+            },
+            {
+              "path": "src/engine/architecture.ts",
+              "name": "architecture.ts",
+              "isDirectory": false,
+              "size": 9110,
+              "lineCount": 279,
+              "language": "TypeScript"
+            },
+            {
+              "path": "src/engine/astParser.ts",
+              "name": "astParser.ts",
+              "isDirectory": false,
+              "size": 5981,
+              "lineCount": 192,
+              "language": "TypeScript"
+            },
+            {
+              "path": "src/engine/changePlanner.ts",
+              "name": "changePlanner.ts",
+              "isDirectory": false,
+              "size": 7012,
+              "lineCount": 199,
+              "language": "TypeScript"
+            },
+            {
+              "path": "src/engine/detector.ts",
+              "name": "detector.ts",
+              "isDirectory": false,
+              "size": 13002,
+              "lineCount": 304,
+              "language": "TypeScript"
+            },
+            {
+              "path": "src/engine/llm.ts",
+              "name": "llm.ts",
+              "isDirectory": false,
+              "size": 5174,
+              "lineCount": 146,
+              "language": "TypeScript"
+            },
+            {
+              "path": "src/engine/scanner.ts",
+              "name": "scanner.ts",
+              "isDirectory": false,
+              "size": 5430,
+              "lineCount": 243,
+              "language": "TypeScript"
+            },
+            {
+              "path": "src/engine/types.ts",
+              "name": "types.ts",
+              "isDirectory": false,
+              "size": 3748,
+              "lineCount": 189,
+              "language": "TypeScript"
+            },
+            {
+              "path": "src/engine/walkthrough.ts",
+              "name": "walkthrough.ts",
+              "isDirectory": false,
+              "size": 6317,
+              "lineCount": 144,
+              "language": "TypeScript"
+            }
+          ]
+        },
+        {
+          "path": "src/mcp",
+          "name": "mcp",
+          "isDirectory": true,
+          "children": [
+            {
+              "path": "src/mcp/server.ts",
+              "name": "server.ts",
+              "isDirectory": false,
+              "size": 16610,
+              "lineCount": 481,
+              "language": "TypeScript"
+            }
+          ]
+        },
+        {
+          "path": "src/server",
+          "name": "server",
+          "isDirectory": true,
+          "children": [
+            {
+              "path": "src/server/api.ts",
+              "name": "api.ts",
+              "isDirectory": false,
+              "size": 7013,
+              "lineCount": 238,
+              "language": "TypeScript"
+            },
+            {
+              "path": "src/server/index.ts",
+              "name": "index.ts",
+              "isDirectory": false,
+              "size": 2978,
+              "lineCount": 92,
+              "language": "TypeScript"
+            },
+            {
+              "path": "src/server/samples.ts",
+              "name": "samples.ts",
+              "isDirectory": false,
+              "size": 14631,
+              "lineCount": 245,
+              "language": "TypeScript"
+            }
+          ]
+        },
+        {
+          "path": "src/skills",
+          "name": "skills",
+          "isDirectory": true,
+          "children": [
+            {
+              "path": "src/skills/generator.ts",
+              "name": "generator.ts",
+              "isDirectory": false,
+              "size": 4220,
+              "lineCount": 115,
+              "language": "TypeScript"
+            }
+          ]
+        },
+        {
+          "path": "src/web",
+          "name": "web",
+          "isDirectory": true,
+          "children": [
+            {
+              "path": "src/web/components",
+              "name": "components",
+              "isDirectory": true,
+              "children": [
+                {
+                  "path": "src/web/components/FeynmanExplainModal.tsx",
+                  "name": "FeynmanExplainModal.tsx",
+                  "isDirectory": false,
+                  "size": 6059,
+                  "lineCount": 164,
+                  "language": "TypeScript (React)"
+                },
+                {
+                  "path": "src/web/components/HowItWorks.tsx",
+                  "name": "HowItWorks.tsx",
+                  "isDirectory": false,
+                  "size": 17219,
+                  "lineCount": 389,
+                  "language": "TypeScript (React)"
+                },
+                {
+                  "path": "src/web/components/HowToMaintain.tsx",
+                  "name": "HowToMaintain.tsx",
+                  "isDirectory": false,
+                  "size": 8712,
+                  "lineCount": 219,
+                  "language": "TypeScript (React)"
+                },
+                {
+                  "path": "src/web/components/McpConfigModal.tsx",
+                  "name": "McpConfigModal.tsx",
+                  "isDirectory": false,
+                  "size": 7324,
+                  "lineCount": 192,
+                  "language": "TypeScript (React)"
+                },
+                {
+                  "path": "src/web/components/Navbar.tsx",
+                  "name": "Navbar.tsx",
+                  "isDirectory": false,
+                  "size": 5382,
+                  "lineCount": 134,
+                  "language": "TypeScript (React)"
+                },
+                {
+                  "path": "src/web/components/ScanModal.tsx",
+                  "name": "ScanModal.tsx",
+                  "isDirectory": false,
+                  "size": 6494,
+                  "lineCount": 175,
+                  "language": "TypeScript (React)"
+                },
+                {
+                  "path": "src/web/components/SettingsModal.tsx",
+                  "name": "SettingsModal.tsx",
+                  "isDirectory": false,
+                  "size": 6851,
+                  "lineCount": 181,
+                  "language": "TypeScript (React)"
+                },
+                {
+                  "path": "src/web/components/SourceViewerModal.tsx",
+                  "name": "SourceViewerModal.tsx",
+                  "isDirectory": false,
+                  "size": 7465,
+                  "lineCount": 195,
+                  "language": "TypeScript (React)"
+                },
+                {
+                  "path": "src/web/components/WalkthroughTour.tsx",
+                  "name": "WalkthroughTour.tsx",
+                  "isDirectory": false,
+                  "size": 7782,
+                  "lineCount": 194,
+                  "language": "TypeScript (React)"
+                },
+                {
+                  "path": "src/web/components/WhatIsThis.tsx",
+                  "name": "WhatIsThis.tsx",
+                  "isDirectory": false,
+                  "size": 11447,
+                  "lineCount": 264,
+                  "language": "TypeScript (React)"
+                },
+                {
+                  "path": "src/web/components/WhereToChange.tsx",
+                  "name": "WhereToChange.tsx",
+                  "isDirectory": false,
+                  "size": 13905,
+                  "lineCount": 327,
+                  "language": "TypeScript (React)"
+                }
+              ]
+            },
+            {
+              "path": "src/web/App.tsx",
+              "name": "App.tsx",
+              "isDirectory": false,
+              "size": 9588,
+              "lineCount": 282,
+              "language": "TypeScript (React)"
+            },
+            {
+              "path": "src/web/index.css",
+              "name": "index.css",
+              "isDirectory": false,
+              "size": 734,
+              "lineCount": 43,
+              "language": "CSS"
+            },
+            {
+              "path": "src/web/main.tsx",
+              "name": "main.tsx",
+              "isDirectory": false,
+              "size": 239,
+              "lineCount": 11,
+              "language": "TypeScript (React)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "index.html",
+      "name": "index.html",
+      "isDirectory": false,
+      "size": 1431,
+      "lineCount": 18,
+      "language": "HTML"
+    },
+    {
+      "path": "package.json",
+      "name": "package.json",
+      "isDirectory": false,
+      "size": 2219,
+      "lineCount": 76,
+      "language": "JSON"
+    },
+    {
+      "path": "postcss.config.js",
+      "name": "postcss.config.js",
+      "isDirectory": false,
+      "size": 80,
+      "lineCount": 7,
+      "language": "JavaScript"
+    },
+    {
+      "path": "tailwind.config.js",
+      "name": "tailwind.config.js",
+      "isDirectory": false,
+      "size": 1173,
+      "lineCount": 44,
+      "language": "JavaScript"
+    },
+    {
+      "path": "tsconfig.json",
+      "name": "tsconfig.json",
+      "isDirectory": false,
+      "size": 514,
+      "lineCount": 21,
+      "language": "JSON"
+    },
+    {
+      "path": "tsconfig.server.json",
+      "name": "tsconfig.server.json",
+      "isDirectory": false,
+      "size": 417,
+      "lineCount": 18,
+      "language": "JSON"
+    },
+    {
+      "path": "vite.config.ts",
+      "name": "vite.config.ts",
+      "isDirectory": false,
+      "size": 484,
+      "lineCount": 27,
+      "language": "TypeScript"
+    }
+  ]
+}
