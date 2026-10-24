@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./705b5323-ba26-425d-8260-b64309482394.png" alt="Feinman — Understand any codebase in minutes" width="100%" />
+</p>
+
 # Feinman — Understand Complex Code with Ease
 
 > *"If you can't explain it simply, you don't understand it."*  
